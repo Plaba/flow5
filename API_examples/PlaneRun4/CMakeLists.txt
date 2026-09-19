@@ -9,7 +9,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 
 option(USING_INTEL_MKL "Activate if flow5 has been built with Intel MKL" OFF)
-option(USING_FLOW5_IO  "Activate to link to flow5-io.\nRequired for data serialization and use of xml files\nRequires linking to Qt5Core" ON)
+option(USING_FLOW5_IO  "Activate to link to flow5-io.\nRequired for data serialization and use of xml files" ON)
 
 
 if (WIN32)
@@ -58,8 +58,6 @@ elseif (LINUX)
     if(NOT EXISTS /usr/include/openblas/lapack.h AND NOT EXISTS /usr/local/include/openblas/lapack.h AND NOT EXISTS /usr/include/x86_64-linux-gnu/openblas/lapack.h)
         include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../compat) # shim for distros without OpenBLAS headers under openblas/
     endif()
-    include_directories(/usr/include/x86_64-linux-gnu/qt5/)        #required by flow5-io
-    include_directories(/usr/include/x86_64-linux-gnu/qt5/QtCore/) #required by flow5-io
 
 
     set(FLOW5_LIB_DIR "/usr/local/lib/" CACHE PATH "The path to the flow5-lib and flow5-io-lib libraries")
@@ -87,7 +85,7 @@ add_executable(${API_EXAMPLE} ${API_EXAMPLE}.cpp)
 target_link_libraries(${API_EXAMPLE} flow5-lib)
 
 if(USING_FLOW5_IO)
-    target_link_libraries(${API_EXAMPLE} flow5-io-lib Qt5Core)
+    target_link_libraries(${API_EXAMPLE} flow5-io-lib)
 endif(USING_FLOW5_IO)
 
 

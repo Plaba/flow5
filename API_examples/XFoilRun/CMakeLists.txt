@@ -51,8 +51,6 @@ elseif (LINUX)
         include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../compat) # shim for distros without OpenBLAS headers under openblas/
     endif()
     #include_directories(/usr/local/include/opencascade/)  # make install location if built from source
-    include_directories(/usr/include/x86_64-linux-gnu/qt5/)        #required by flow5-io
-    include_directories(/usr/include/x86_64-linux-gnu/qt5/QtCore/) #required by flow5-io
 
     link_directories(/usr/local/lib/)
     link_directories(/usr/lib64/)
@@ -71,7 +69,7 @@ add_executable(${API_EXAMPLE} xfoilrun.cpp)
 
 target_link_libraries(${API_EXAMPLE} flow5-lib)
 if(FLOW5_IO)
-    target_link_libraries(${API_EXAMPLE} flow5-io-lib Qt5Core)
+    target_link_libraries(${API_EXAMPLE} flow5-io-lib)
 endif(FLOW5_IO)
 
 
