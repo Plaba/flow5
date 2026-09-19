@@ -13,6 +13,7 @@ DEFINES += XFOIL_LIBRARY
 
 greaterThan(QT_MAJOR_VERSION, 5) {
     CONFIG += c++20
+    QMAKE_CXXFLAGS += -std=c++20
 } else {
     CONFIG += c++17
 }

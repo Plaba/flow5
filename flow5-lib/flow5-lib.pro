@@ -13,6 +13,7 @@ DEFINES += FL5LIB_LIBRARY
 
 
 CONFIG += c++20
+QMAKE_CXXFLAGS += -std=c++20
 
 
 # The path to the libraries' header files required by the code at compile time

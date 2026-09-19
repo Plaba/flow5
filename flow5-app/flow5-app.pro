@@ -28,6 +28,7 @@ CONFIG(release, debug|release) {
 }
 
 CONFIG += c++20
+QMAKE_CXXFLAGS += -std=c++20
 
 # The path to the libraries' header files required by the code at compile time
 INCLUDEPATH += $$PWD/../XFoil-lib/
@@ -122,8 +123,10 @@ linux-g++ {
     LIBS += -L../XFoil-lib -lXFoil
 
 
-    #prevent sfinae warnings in the Qt libs
-    QMAKE_CXXFLAGS += -Wsfinae-incomplete=0
+    #prevent sfinae warnings in the Qt libs (clang only, unsupported by GCC)
+    clang {
+        QMAKE_CXXFLAGS += -Wsfinae-incomplete=0
+    }
 }
 
 
@@ -268,6 +271,15 @@ RESOURCES += \
 
 LIBS += -L../flow5-lib -lflow5-lib
 LIBS += -L../flow5-io-lib -lflow5-io-lib
+
+linux-g++ {
+    # flow5-lib.so/flow5-io-lib.so legitimately carry undefined symbols that
+    # are resolved via their own recorded dependencies (XFoil, OpenBLAS,
+    # OCCT) rather than by this executable directly. Some Linux toolchains'
+    # default linker settings refuse to link an executable against a shared
+    # library that still has such undefined symbols unless told this is fine.
+    QMAKE_LFLAGS += -Wl,--allow-shlib-undefined
+}
 
 LIBS += \
     -lTKBRep \

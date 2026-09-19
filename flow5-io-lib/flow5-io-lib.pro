@@ -8,6 +8,7 @@ TEMPLATE = lib
 DEFINES += FLOW5_IO_LIB
 
 CONFIG += c++20
+QMAKE_CXXFLAGS += -std=c++20
 TARGET = flow5-io-lib
 
 #The path to the libraries' header files required by the code at compile time
@@ -59,8 +60,10 @@ linux-g++ {
     LIBS += -L/usr/lib64/            #fedora install location
 
 
-    #prevent sfinae warnings in the Qt libs
-    QMAKE_CXXFLAGS += -Wsfinae-incomplete=0
+    #prevent sfinae warnings in the Qt libs (clang only, unsupported by GCC)
+    clang {
+        QMAKE_CXXFLAGS += -Wsfinae-incomplete=0
+    }
 
 
 }
