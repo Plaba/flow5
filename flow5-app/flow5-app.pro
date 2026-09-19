@@ -282,9 +282,9 @@ LIBS += -L../flow5-io-lib -lflow5-io-lib
 linux-g++ {
     # flow5-lib.so/flow5-io-lib.so legitimately carry undefined symbols that
     # are resolved via their own recorded dependencies (XFoil, OpenBLAS,
-    # OCCT) rather than by this executable directly. Ubuntu's default linker
-    # settings refuse to link an executable against a shared library that
-    # still has such undefined symbols unless told this is fine.
+    # OCCT) rather than by this executable directly. Some Linux toolchains'
+    # default linker settings refuse to link an executable against a shared
+    # library that still has such undefined symbols unless told this is fine.
     QMAKE_LFLAGS += -Wl,--allow-shlib-undefined
 }
 
