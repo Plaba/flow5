@@ -47,9 +47,12 @@ elseif (LINUX)
     include_directories(/usr/local/include/flow5/)
     include_directories(/usr/include/)                     # gmsh install location in fedora
     include_directories(/usr/include/opencascade/)         # default distro location
+    if(NOT EXISTS /usr/include/openblas/lapack.h AND NOT EXISTS /usr/local/include/openblas/lapack.h AND NOT EXISTS /usr/include/x86_64-linux-gnu/openblas/lapack.h)
+        include_directories(${CMAKE_CURRENT_SOURCE_DIR}/../../compat) # shim for distros without OpenBLAS headers under openblas/
+    endif()
     #include_directories(/usr/local/include/opencascade/)  # make install location if built from source
-    include_directories(/usr/include/qt6/)        #required by flow5-io
-    include_directories(/usr/include/qt6/QtCore/) #required by flow5-io
+    include_directories(/usr/include/x86_64-linux-gnu/qt5/)        #required by flow5-io
+    include_directories(/usr/include/x86_64-linux-gnu/qt5/QtCore/) #required by flow5-io
 
     link_directories(/usr/local/lib/)
     link_directories(/usr/lib64/)
@@ -68,7 +71,7 @@ add_executable(${API_EXAMPLE} xfoilrun.cpp)
 
 target_link_libraries(${API_EXAMPLE} flow5-lib)
 if(FLOW5_IO)
-    target_link_libraries(${API_EXAMPLE} flow5-io-lib Qt6Core)
+    target_link_libraries(${API_EXAMPLE} flow5-io-lib Qt5Core)
 endif(FLOW5_IO)
 
 
@@ -93,7 +96,7 @@ elseif (LINUX)
         #   openblas:  single-threaded library
         #   openblaso: built with USE_OPENMP=1
         #   openblasp: multi-threading without OMP
-        target_link_libraries(${API_EXAMPLE} openblasp)
+        target_link_libraries(${API_EXAMPLE} openblas)
         target_compile_definitions(${API_EXAMPLE} PUBLIC OPENBLAS)
     endif()
 elseif (APPLE)
