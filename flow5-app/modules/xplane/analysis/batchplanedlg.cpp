@@ -699,7 +699,11 @@ void BatchPlaneDlg::calculate()
 
     //run the instance asynchronously
     // Launch the task async to keep the UI responsive
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
+    QFuture<void> future = QtConcurrent::run(m_pExecutor, &XflExecutor::onRunExecutor);
+#else
     QFuture<void> future = QtConcurrent::run(&XflExecutor::onRunExecutor, m_pExecutor);
+#endif
     (void)future;
 
 /*    QThread *pThread = new QThread;

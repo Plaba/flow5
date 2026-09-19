@@ -353,7 +353,11 @@ BoatTask* BoatAnalysisDlg::analyze(Boat *pBoat, BoatPolar *pBoatPolar, std::vect
 
 
     // Launch the task async to keep the UI responsive
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
+    QFuture<void> future = QtConcurrent::run(this, &BoatAnalysisDlg::runAsync);
+#else
     QFuture<void> future = QtConcurrent::run(&BoatAnalysisDlg::runAsync, this);
+#endif
     (void)future;
 
     return m_pActiveTask;

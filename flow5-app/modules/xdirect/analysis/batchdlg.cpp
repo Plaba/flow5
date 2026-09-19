@@ -497,7 +497,11 @@ void BatchDlg::startOneTask()
         qApp->postEvent(this, new MessageEvent(strange));
 
         // using the Qt thread system for the QEvent mechanism
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
+        QFuture<void> future = QtConcurrent::run(this, &BatchDlg::runQTask, pXFoilTask);
+#else
         QFuture<void> future = QtConcurrent::run(&BatchDlg::runQTask, this, pXFoilTask);
+#endif
         (void)future;
     }
 }

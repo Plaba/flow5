@@ -295,7 +295,11 @@ void XFoilAnalysisDlg::start()
     m_ppbCancel->setText(tr("Cancel"));
 
     // Launch the task async to keep the UI responsive
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
+    QFuture<void> future = QtConcurrent::run(this, &XFoilAnalysisDlg::runAsync);
+#else
     QFuture<void> future = QtConcurrent::run(&XFoilAnalysisDlg::runAsync, this);
+#endif
     (void)future;
 }
 

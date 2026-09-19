@@ -378,7 +378,11 @@ PlaneTask* PlaneAnalysisDlg::analyze(Plane *pPlane, PlanePolar *pPlPolar, std::v
     m_bHasErrors = false;
 
     // Launch the task async to keep the UI responsive
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
+    QFuture<void> future = QtConcurrent::run(this, &PlaneAnalysisDlg::runAsync);
+#else
     QFuture<void> future = QtConcurrent::run(&PlaneAnalysisDlg::runAsync, this);
+#endif
     (void)future;
 
     return m_pActiveTask;

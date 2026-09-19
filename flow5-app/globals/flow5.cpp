@@ -284,7 +284,11 @@ void Flow5App::loadTranslations()
         locale = QLocale(QLocale::French, QLocale::France);
     }
 
+#if QT_VERSION >= QT_VERSION_CHECK(6, 0, 0)
     const QString qtTrDir = QLibraryInfo::path(QLibraryInfo::TranslationsPath);
+#else
+    const QString qtTrDir = QLibraryInfo::location(QLibraryInfo::TranslationsPath);
+#endif
 
     if(m_qtTranslator.load(locale, QStringLiteral("qt"), QStringLiteral("_"), qtTrDir))
     {

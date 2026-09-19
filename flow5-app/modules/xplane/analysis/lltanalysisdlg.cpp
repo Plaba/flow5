@@ -432,7 +432,11 @@ void LLTAnalysisDlg::analyze()
     onOutputMessage(log);
 
     // Launch the task async to keep the UI responsive
+#if (QT_VERSION < QT_VERSION_CHECK(6, 0, 0))
+    QFuture<void> future = QtConcurrent::run(this, &LLTAnalysisDlg::runAsync);
+#else
     QFuture<void> future = QtConcurrent::run(&LLTAnalysisDlg::runAsync, this);
+#endif
     (void)future;
 }
 
