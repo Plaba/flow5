@@ -36,6 +36,7 @@
 
 #include <UnitsAPI.hxx>
 #include <BRepBuilderAPI_Transform.hxx>
+#include <StdFail_NotDone.hxx>
 
 #include "cadexportdlg.h"
 #include <interfaces/widgets/customwts/plaintextoutput.h>

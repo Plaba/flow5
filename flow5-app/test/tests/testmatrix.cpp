@@ -561,7 +561,7 @@ void testLapacke12()
         // https://github.com/OpenMathLib/OpenBLAS/issues/3877
         dgels_(&trans,&m,&n,&nrhs,a,&lda,mu,&ldb, work.data(), &lwork, &info, 1);
     #else
-        dgels_(&trans,&m,&n,&nrhs,a,&lda,mu,&ldb, work.data(), &lwork, &info, 1);
+        dgels_(&trans,&m,&n,&nrhs,a,&lda,mu,&ldb, work.data(), &lwork, &info);
     #endif
 #elif defined INTEL_MKL
     dgels_(&trans,&m,&n,&nrhs,a,&lda,mu,&ldb, work.data(), &lwork, &info);

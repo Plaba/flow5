@@ -30,6 +30,8 @@
 #include <RWObj.hxx>
 #include <RWStl.hxx>
 #include <STEPControl_Writer.hxx>
+#include <StdFail_NotDone.hxx>
+#include <Standard_NoSuchObject.hxx>
 #include <gp_Trsf.hxx>
 
 #include <QDataStream>

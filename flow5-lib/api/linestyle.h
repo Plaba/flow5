@@ -28,6 +28,10 @@
 
 #include <fl5color.h>
 
+#ifdef QT_CORE_LIB
+#include <QMetaType>
+#endif
+
 #define NPOINTSTYLES   15
 #define NLINESTYLES    6
 #define NLINEWIDTHS    10
@@ -218,4 +222,8 @@ struct LineStyle
     }
 
 };
+
+#ifdef QT_CORE_LIB
+Q_DECLARE_METATYPE(LineStyle)
+#endif
 

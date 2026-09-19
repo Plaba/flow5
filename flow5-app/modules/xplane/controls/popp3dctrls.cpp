@@ -30,7 +30,7 @@
 #include <QGridLayout>
 #include <QVBoxLayout>
 #include <QButtonGroup>
-//#include <QAction>
+#include <QAction>
 
 #include "popp3dctrls.h"
 

@@ -22,7 +22,9 @@
 
 *****************************************************************************/
 
+#include <QDataStream>
 #include <QDir>
+#include <QTextStream>
 
 #include <utils-io.h>
 

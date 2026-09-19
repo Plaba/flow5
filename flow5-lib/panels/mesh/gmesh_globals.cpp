@@ -83,23 +83,40 @@ void gmesh::listMainOptions(std::string &list)
 std::string gmesh::getNumberOption(std::string name)
 {
     int nchar = 37;
-    double number(0);
-    gmsh::option::getNumber(name, number);
-    name.resize(nchar, ' ');
-    std::string str = name + std::format(":  {:g}", number);
-    return str;
+    std::string optionname = name;
+    optionname.resize(nchar, ' ');
 
+    double number(0);
+    try
+    {
+        gmsh::option::getNumber(name, number);
+    }
+    catch(std::exception const&)
+    {
+        // the option may not exist in older/newer gmsh versions
+        return optionname + ":  n/a";
+    }
+    return optionname + std::format(":  {:g}", number);
 }
 
 
 std::string gmesh::getStringOption(std::string name)
 {
     int nchar = 37;
+    std::string optionname = name;
+    optionname.resize(nchar, ' ');
+
     std::string optionvalue;
-    gmsh::option::getString(name, optionvalue);
-    name.resize(nchar, ' ');
-    std::string str = name + optionvalue;
-    return str;
+    try
+    {
+        gmsh::option::getString(name, optionvalue);
+    }
+    catch(std::exception const&)
+    {
+        // the option may not exist in older/newer gmsh versions
+        return optionname + "n/a";
+    }
+    return optionname + optionvalue;
 }
 
 

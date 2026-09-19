@@ -6467,7 +6467,7 @@ void XPlane::onCheckFreeEdges()
         if(m_pCurPlane->isXflType())
         {
             PlaneXfl const *pPlaneXfl = dynamic_cast<PlaneXfl const*>(m_pCurPlane);
-            std::vector<QPair<int, int>> pairerrors;
+            std::vector<std::pair<int, int>> pairerrors;
             pPlaneXfl->quadMesh().getFreeEdges(freeedges, pairerrors);
             if(pairerrors.size())
             {

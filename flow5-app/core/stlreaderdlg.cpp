@@ -255,7 +255,7 @@ bool StlReaderDlg::importTrianglesFromMeshFile(QString const &FileName, double u
         logmsg +=                   "Bounding box limits:                     x           y           z\n";
         logmsg += QString::asprintf("                     botleft = %11g %11g %11g ", botleft.x,  botleft.y,  botleft.z)  + Units::lengthUnitQLabel() + EOLch;
         logmsg += QString::asprintf("                     topright= %11g %11g %11g ", topright.x, topright.y, topright.z) + Units::lengthUnitQLabel() + EOLch;
-        logmsg += EOLstr;
+        logmsg += EOLch;
         m_ppto->onAppendQText(logmsg);
         m_Triangle = triangles;
     }

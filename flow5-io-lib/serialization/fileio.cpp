@@ -27,6 +27,7 @@
 #define _MATH_DEFINES_DEFINED
 
 #include <QCoreApplication>
+#include <QDataStream>
 #include <QFile>
 #include <QFileInfo>
 #include <QDir>

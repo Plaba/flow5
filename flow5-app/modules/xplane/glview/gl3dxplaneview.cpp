@@ -2176,7 +2176,7 @@ void gl3dXPlaneView::glMake3dObjects()
         //    a roll gives the bank angle.
         m_matPOpp.setToIdentity();
         m_matPOpp.rotate(pPOpp->beta(),  {0,0,1});
-        m_matPOpp.rotate(pPOpp->alpha(), {-std::sinf(pPOpp->beta()*PI/180.0), std::cosf(pPOpp->beta()*PI/180.0), 0.0f});
+        m_matPOpp.rotate(pPOpp->alpha(), {-std::sin(pPOpp->beta()*PI/180.0), std::cos(pPOpp->beta()*PI/180.0), 0.0f});
     }
 
     if(s_bResetglGeom)
