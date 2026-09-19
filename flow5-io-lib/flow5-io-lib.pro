@@ -151,14 +151,22 @@ include (flow5-io-lib.pri)
 
 #----- OCC -----
 
+# OCCT >= 7.8 split data-exchange support out of the older monolithic
+# libraries (TKSTEP, TKRWMesh) into per-format TKDE* libraries; older
+# versions (e.g. OCCT 7.6.x, as packaged by Ubuntu 24.04) still provide
+# this functionality under the original library names.
+exists(/usr/lib/x86_64-linux-gnu/libTKDESTEP.so)|exists(/usr/local/lib/libTKDESTEP.so) {
+    OCCT_DE_LIBS = -lTKDESTEP -lTKDEOBJ -lTKDESTL
+} else {
+    OCCT_DE_LIBS = -lTKSTEP -lTKSTEPBase -lTKSTEPAttr -lTKSTEP209 -lTKRWMesh -lTKSTL
+}
+
 LIBS += \
     -lTKBO \
     -lTKBRep \
     -lTKBool \
     -lTKCDF \
-    -lTKDESTEP \
-    -lTKDEOBJ \
-    -lTKDESTL \
+    $$OCCT_DE_LIBS \
     -lTKFillet \
     -lTKG2d \
     -lTKG3d \

@@ -79,9 +79,17 @@ linux-g++ {
         #   openblas:  single-threaded library
         #   openblaso: built with USE_OPENMP=1
         #   openblasp: multi-threading without OMP
-#        LIBS += -lopenblas
+        LIBS += -lopenblas
 #        LIBS += -lopenblaso
-        LIBS += -lopenblasp
+#        LIBS += -lopenblasp
+
+        # Ubuntu/Debian's libopenblas-dev doesn't install its headers under
+        # an "openblas/" subdirectory the way an OpenBLAS from-source install
+        # (or Fedora's package) does; this shim supplies that layout on top
+        # of the system headers, only when the real thing isn't already there.
+        !exists(/usr/include/openblas/lapack.h):!exists(/usr/local/include/openblas/lapack.h):!exists(/usr/include/x86_64-linux-gnu/openblas/lapack.h) {
+            INCLUDEPATH += $$PWD/../compat
+        }
     }
 
 
@@ -217,12 +225,21 @@ include (flow5-lib.pri)
 
 #----- OCC -----
 
+# OCCT >= 7.8 split STEP support out of TKSTEP into TKDESTEP; older
+# versions (e.g. OCCT 7.6.x, as packaged by Ubuntu 24.04) still need
+# the original TKSTEP* libraries.
+exists(/usr/lib/x86_64-linux-gnu/libTKDESTEP.so)|exists(/usr/local/lib/libTKDESTEP.so) {
+    OCCT_STEP_LIBS = -lTKDESTEP
+} else {
+    OCCT_STEP_LIBS = -lTKSTEP -lTKSTEPBase -lTKSTEPAttr -lTKSTEP209
+}
+
 LIBS += \
     -lTKBO \
     -lTKBRep \
     -lTKBool \
     -lTKCDF \
-    -lTKDESTEP \
+    $$OCCT_STEP_LIBS \
     -lTKFillet \
     -lTKG2d \
     -lTKG3d \
